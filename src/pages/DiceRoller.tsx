@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Dice6, History, Trash2, Download } from 'lucide-react'
 import { Button } from '../components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
+
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { Badge } from '../components/ui/badge'
@@ -27,13 +27,13 @@ const DiceRoller = () => {
   const [isRolling, setIsRolling] = useState(false)
 
   const diceTypes = [
-    { sides: 4, name: 'D4', color: 'bg-emerald-500', description: 'Minor spells, dagger damage' },
-    { sides: 6, name: 'D6', color: 'bg-blue-500', description: 'Shortsword, sneak attack' },
-    { sides: 8, name: 'D8', color: 'bg-purple-500', description: 'Longsword, rapier damage' },
-    { sides: 10, name: 'D10', color: 'bg-orange-500', description: 'Heavy crossbow, glaive' },
-    { sides: 12, name: 'D12', color: 'bg-red-500', description: 'Greataxe, barbarian hit die' },
-    { sides: 20, name: 'D20', color: 'bg-gold-500', description: 'Attack rolls, saving throws' },
-    { sides: 100, name: 'D100', color: 'bg-pink-500', description: 'Percentile rolls' }
+    { sides: 4, name: 'D4', color: '#10B981', bgClass: 'dice-3d', description: 'Minor spells, dagger damage' },
+    { sides: 6, name: 'D6', color: '#3B82F6', bgClass: 'dice-3d', description: 'Shortsword, sneak attack' },
+    { sides: 8, name: 'D8', color: '#8B5CF6', bgClass: 'dice-3d', description: 'Longsword, rapier damage' },
+    { sides: 10, name: 'D10', color: '#F59E0B', bgClass: 'dice-3d', description: 'Heavy crossbow, glaive' },
+    { sides: 12, name: 'D12', color: '#EF4444', bgClass: 'dice-3d', description: 'Greataxe, barbarian hit die' },
+    { sides: 20, name: 'D20', color: '#DAA520', bgClass: 'dice-3d', description: 'Attack rolls, saving throws' },
+    { sides: 100, name: 'D100', color: '#EC4899', bgClass: 'dice-3d', description: 'Percentile rolls' }
   ]
 
   const rollDice = (sides: number, count: number = 1) => {
@@ -67,7 +67,7 @@ const DiceRoller = () => {
 
   const rollMultiple = (diceString: string) => {
     // Parse dice notation like "2d6+3" or "1d20"
-    const match = diceString.match(/(\d+)?d(\d+)([+-]\d+)?/)
+    const match = diceString.match(/(\\d+)?d(\\d+)([+-]\\d+)?/)
     if (!match) {
       toast.error('Invalid dice format! Use format like "2d6" or "1d20+3"')
       return
@@ -105,7 +105,7 @@ const DiceRoller = () => {
 
   const getDiceColor = (sides: number) => {
     const dice = diceTypes.find(d => d.sides === sides)
-    return dice?.color || 'bg-gray-500'
+    return dice?.color || '#8B5CF6'
   }
 
   return (
@@ -117,9 +117,14 @@ const DiceRoller = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-8"
         >
-          <Dice6 className="h-16 w-16 text-purple-400 mx-auto mb-4" />
-          <h1 className="text-4xl font-bold text-white mb-4">Digital Dice Roller</h1>
-          <p className="text-gray-400 text-lg">
+          <motion.div
+            className="floating"
+            whileHover={{ scale: 1.1 }}
+          >
+            <Dice6 className="h-16 w-16 text-yellow-400 mx-auto mb-4 glow-text" />
+          </motion.div>
+          <h1 className="text-4xl font-bold text-yellow-300 mb-4 glow-text">Digital Dice Roller</h1>
+          <p className="text-yellow-200 text-lg">
             Roll all your D&D dice with realistic animations and automatic calculations
           </p>
         </motion.div>
@@ -128,48 +133,52 @@ const DiceRoller = () => {
           {/* Dice Interface */}
           <div className="lg:col-span-2 space-y-6">
             {/* Quick Dice */}
-            <Card className="bg-black/40 border-purple-500/30">
-              <CardHeader>
-                <CardTitle className="text-white">Quick Roll</CardTitle>
-                <CardDescription className="text-gray-400">
+            <div className="card-3d">
+              <div className="flex flex-col space-y-1.5 p-6">
+                <h3 className="font-semibold leading-none tracking-tight text-yellow-300 glow-text">Quick Roll</h3>
+                <p className="text-sm text-yellow-200">
                   Click any die to roll it instantly
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
+                </p>
+              </div>
+              <div className="p-6 pt-0">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {diceTypes.map((die) => (
                     <motion.button
                       key={die.sides}
-                      whileHover={{ scale: 1.05 }}
+                      whileHover={{ scale: 1.05, rotateY: 15 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => rollDice(die.sides)}
                       disabled={isRolling}
-                      className={`${die.color} rounded-xl p-4 text-white font-bold text-lg hover:opacity-90 transition-opacity disabled:opacity-50`}
+                      className="dice-3d p-4 text-white font-bold text-lg disabled:opacity-50 cursor-pointer"
+                      style={{
+                        '--dice-color': die.color,
+                        '--dice-color-dark': die.color + 'CC'
+                      } as React.CSSProperties}
                     >
-                      <div className="text-2xl mb-1">{die.name}</div>
+                      <div className="text-2xl mb-1 glow-text">{die.name}</div>
                       <div className="text-xs opacity-80">{die.description}</div>
                     </motion.button>
                   ))}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             {/* Advanced Rolling */}
-            <Card className="bg-black/40 border-purple-500/30">
-              <CardHeader>
-                <CardTitle className="text-white">Advanced Rolling</CardTitle>
-                <CardDescription className="text-gray-400">
+            <div className="card-3d">
+              <div className="flex flex-col space-y-1.5 p-6">
+                <h3 className="font-semibold leading-none tracking-tight text-yellow-300 glow-text">Advanced Rolling</h3>
+                <p className="text-sm text-yellow-200">
                   Roll multiple dice with modifiers and descriptions
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
+                </p>
+              </div>
+              <div className="p-6 pt-0 space-y-4">
                 <div className="grid md:grid-cols-3 gap-4">
                   <div>
-                    <Label htmlFor="dice-notation" className="text-gray-300">Dice Notation</Label>
+                    <Label htmlFor="dice-notation" className="text-yellow-300">Dice Notation</Label>
                     <Input
                       id="dice-notation"
                       placeholder="e.g., 2d6+3, 1d20"
-                      className="bg-black/30 border-purple-500/30 text-white"
+                      className="glassmorphism border-yellow-600/30 text-yellow-100 placeholder:text-yellow-300/50"
                       onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                           rollMultiple(e.currentTarget.value)
@@ -179,23 +188,23 @@ const DiceRoller = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="modifier" className="text-gray-300">Modifier</Label>
+                    <Label htmlFor="modifier" className="text-yellow-300">Modifier</Label>
                     <Input
                       id="modifier"
                       type="number"
                       value={modifier}
                       onChange={(e) => setModifier(parseInt(e.target.value) || 0)}
-                      className="bg-black/30 border-purple-500/30 text-white"
+                      className="glassmorphism border-yellow-600/30 text-yellow-100"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="description" className="text-gray-300">Description</Label>
+                    <Label htmlFor="description" className="text-yellow-300">Description</Label>
                     <Input
                       id="description"
                       placeholder="Attack roll, save, etc."
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
-                      className="bg-black/30 border-purple-500/30 text-white"
+                      className="glassmorphism border-yellow-600/30 text-yellow-100 placeholder:text-yellow-300/50"
                     />
                   </div>
                 </div>
@@ -206,7 +215,7 @@ const DiceRoller = () => {
                     size="sm"
                     variant="outline"
                     onClick={() => rollMultiple('1d20')}
-                    className="border-purple-500/30 text-purple-300"
+                    className="glassmorphism border-yellow-600/30 text-yellow-300 hover:bg-yellow-600/10"
                   >
                     Attack Roll (1d20)
                   </Button>
@@ -214,75 +223,80 @@ const DiceRoller = () => {
                     size="sm"
                     variant="outline"
                     onClick={() => rollMultiple('4d6')}
-                    className="border-purple-500/30 text-purple-300"
+                    className="glassmorphism border-yellow-600/30 text-yellow-300 hover:bg-yellow-600/10"
                   >
                     Ability Score (4d6)
                   </Button>
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => rollMultiple('2d6')}
-                    className="border-purple-500/30 text-purple-300"
+                    onClick={() => rollMultiple('2d20')}
+                    className="glassmorphism border-yellow-600/30 text-yellow-300 hover:bg-yellow-600/10"
                   >
                     Advantage (2d20)
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             {/* Current Roll Display */}
             <AnimatePresence>
               {(currentRoll || isRolling) && (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
+                  initial={{ opacity: 0, scale: 0.8, rotateX: -30 }}
+                  animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, rotateX: 30 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <Card className="bg-gradient-to-br from-purple-900/50 to-blue-900/50 border-purple-400/50">
-                    <CardHeader>
-                      <CardTitle className="text-white text-center">
+                  <div className="card-3d" style={{
+                    background: 'linear-gradient(145deg, rgba(218, 165, 32, 0.1) 0%, rgba(139, 69, 19, 0.1) 100%)',
+                    borderColor: 'rgba(218, 165, 32, 0.4)'
+                  }}>
+                    <div className="flex flex-col space-y-1.5 p-6">
+                      <h3 className="font-semibold leading-none tracking-tight text-yellow-300 text-center glow-text">
                         {isRolling ? 'Rolling...' : 'Last Roll'}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="text-center">
+                      </h3>
+                    </div>
+                    <div className="p-6 pt-0 text-center">
                       {isRolling ? (
                         <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                          className="mx-auto w-16 h-16 bg-purple-500 rounded-lg flex items-center justify-center"
+                          className="mx-auto w-16 h-16 dice-3d dice-rolling flex items-center justify-center"
+                          style={{
+                            '--dice-color': '#8B5CF6',
+                            '--dice-color-dark': '#7C3AED'
+                          } as React.CSSProperties}
                         >
-                          <Dice6 className="h-8 w-8 text-white" />
+                          <Dice6 className="h-8 w-8 text-white glow-text" />
                         </motion.div>
                       ) : currentRoll && (
                         <div>
-                          <div className="text-6xl font-bold text-white mb-4">
+                          <div className="text-6xl font-bold text-yellow-300 mb-4 glow-text">
                             {currentRoll.total}
                           </div>
                           <div className="space-y-2">
-                            <Badge variant="secondary" className="text-lg px-4 py-1">
+                            <Badge variant="secondary" className="text-lg px-4 py-1 glassmorphism border-yellow-600/30 text-yellow-300">
                               {currentRoll.dice}
                             </Badge>
                             {currentRoll.rolls.length > 1 && (
-                              <div className="text-gray-300">
+                              <div className="text-yellow-200">
                                 Individual rolls: [{currentRoll.rolls.join(', ')}]
                               </div>
                             )}
                             {currentRoll.modifier !== 0 && (
-                              <div className="text-gray-300">
+                              <div className="text-yellow-200">
                                 Modifier: {currentRoll.modifier >= 0 ? '+' : ''}{currentRoll.modifier}
                               </div>
                             )}
                             {currentRoll.description && (
-                              <div className="text-purple-300 font-medium">
+                              <div className="text-yellow-400 font-medium glow-text">
                                 {currentRoll.description}
                               </div>
                             )}
                           </div>
                         </div>
                       )}
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -290,12 +304,12 @@ const DiceRoller = () => {
 
           {/* Roll History */}
           <div className="space-y-6">
-            <Card className="bg-black/40 border-purple-500/30">
-              <CardHeader>
+            <div className="card-3d">
+              <div className="flex flex-col space-y-1.5 p-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <History className="h-5 w-5 text-purple-400" />
-                    <CardTitle className="text-white">Roll History</CardTitle>
+                    <History className="h-5 w-5 text-yellow-400 glow-text" />
+                    <h3 className="font-semibold leading-none tracking-tight text-yellow-300 glow-text">Roll History</h3>
                   </div>
                   <div className="flex space-x-2">
                     <Button
@@ -303,7 +317,7 @@ const DiceRoller = () => {
                       variant="ghost"
                       onClick={exportHistory}
                       disabled={rollHistory.length === 0}
-                      className="text-purple-400 hover:bg-purple-600/20"
+                      className="text-yellow-400 hover:bg-yellow-600/20"
                     >
                       <Download className="h-4 w-4" />
                     </Button>
@@ -318,15 +332,15 @@ const DiceRoller = () => {
                     </Button>
                   </div>
                 </div>
-                <CardDescription className="text-gray-400">
+                <p className="text-sm text-yellow-200">
                   {rollHistory.length} rolls recorded
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
+                </p>
+              </div>
+              <div className="p-6 pt-0">
                 <ScrollArea className="h-96">
                   <div className="space-y-2">
                     {rollHistory.length === 0 ? (
-                      <div className="text-center text-gray-500 py-8">
+                      <div className="text-center text-yellow-300/50 py-8">
                         No rolls yet. Roll some dice to see history!
                       </div>
                     ) : (
@@ -335,29 +349,35 @@ const DiceRoller = () => {
                           key={roll.id}
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
-                          className="flex items-center justify-between p-3 bg-black/20 rounded-lg border border-purple-500/20"
+                          className="flex items-center justify-between p-3 glassmorphism rounded-lg border border-yellow-600/20"
                         >
                           <div className="flex items-center space-x-3">
-                            <div className={`w-8 h-8 ${getDiceColor(parseInt(roll.dice.split('d')[1]))} rounded flex items-center justify-center text-white text-xs font-bold`}>
+                            <div 
+                              className="w-8 h-8 dice-3d rounded flex items-center justify-center text-white text-xs font-bold"
+                              style={{
+                                '--dice-color': getDiceColor(parseInt(roll.dice.split('d')[1])),
+                                '--dice-color-dark': getDiceColor(parseInt(roll.dice.split('d')[1])) + 'CC'
+                              } as React.CSSProperties}
+                            >
                               {roll.dice}
                             </div>
                             <div>
-                              <div className="text-white font-medium">
+                              <div className="text-yellow-300 font-medium glow-text">
                                 {roll.total}
                               </div>
-                              <div className="text-xs text-gray-400">
+                              <div className="text-xs text-yellow-200/70">
                                 {formatTime(roll.timestamp)}
                               </div>
                             </div>
                           </div>
                           <div className="text-right">
                             {roll.rolls.length > 1 && (
-                              <div className="text-xs text-gray-400">
+                              <div className="text-xs text-yellow-200/70">
                                 [{roll.rolls.join(', ')}]
                               </div>
                             )}
                             {roll.description && (
-                              <div className="text-xs text-purple-300">
+                              <div className="text-xs text-yellow-400">
                                 {roll.description}
                               </div>
                             )}
@@ -367,8 +387,8 @@ const DiceRoller = () => {
                     )}
                   </div>
                 </ScrollArea>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
       </div>

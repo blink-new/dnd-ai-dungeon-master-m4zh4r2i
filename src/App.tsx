@@ -12,16 +12,19 @@ function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
       <Router>
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-stone-900 to-gray-900">
-          <Navbar />
-          <main>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/character-creator" element={<CharacterCreator />} />
-              <Route path="/dice-roller" element={<DiceRoller />} />
-              <Route path="/game-session" element={<GameSession />} />
-            </Routes>
-          </main>
+        <div className="min-h-screen relative overflow-hidden">
+          <div className="parallax-bg"></div>
+          <div className="perspective-container">
+            <Navbar />
+            <main className="scene-3d">
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/character-creator" element={<CharacterCreator />} />
+                <Route path="/dice-roller" element={<DiceRoller />} />
+                <Route path="/game-session" element={<GameSession />} />
+              </Routes>
+            </main>
+          </div>
           <Toaster />
         </div>
       </Router>

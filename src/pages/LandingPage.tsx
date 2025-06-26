@@ -9,31 +9,31 @@ const LandingPage = () => {
       title: 'Custom Character Creator',
       description: 'Build unique D&D characters with full race, class, and background customization. Roll stats or use point-buy system.',
       link: '/character-creator',
-      color: 'card-medieval hover:scale-105 transition-all duration-300 h-full cursor-pointer p-6'
+      color: 'card-3d hover:scale-105 transition-all duration-500 h-full cursor-pointer p-6'
     },
     {
       icon: Dice6,
       title: 'Digital Dice Roller',
       description: 'Complete set of D&D dice (D4, D6, D8, D10, D12, D20, D00) with animated rolls and history tracking.',
       link: '/dice-roller',
-      color: 'card-medieval hover:scale-105 transition-all duration-300 h-full cursor-pointer p-6'
+      color: 'card-3d hover:scale-105 transition-all duration-500 h-full cursor-pointer p-6'
     },
     {
       icon: Sword,
       title: 'AI Dungeon Master',
       description: 'Experience immersive storytelling with an AI DM that adapts to your choices and manages complex campaigns.',
       link: '/game-session',
-      color: 'card-medieval hover:scale-105 transition-all duration-300 h-full cursor-pointer p-6'
+      color: 'card-3d hover:scale-105 transition-all duration-500 h-full cursor-pointer p-6'
     }
   ]
 
   const diceTypes = [
-    { sides: 4, name: 'D4', use: 'Minor spells, small weapons' },
-    { sides: 6, name: 'D6', use: 'Damage, stats, sneak attacks' },
-    { sides: 8, name: 'D8', use: 'Medium weapons, spells' },
-    { sides: 10, name: 'D10', use: 'Heavy damage, percentiles' },
-    { sides: 12, name: 'D12', use: 'Great weapons, hit points' },
-    { sides: 20, name: 'D20', use: 'Attacks, saves, skill checks' },
+    { sides: 4, name: 'D4', use: 'Minor spells, small weapons', color: '#10B981' },
+    { sides: 6, name: 'D6', use: 'Damage, stats, sneak attacks', color: '#3B82F6' },
+    { sides: 8, name: 'D8', use: 'Medium weapons, spells', color: '#8B5CF6' },
+    { sides: 10, name: 'D10', use: 'Heavy damage, percentiles', color: '#F59E0B' },
+    { sides: 12, name: 'D12', use: 'Great weapons, hit points', color: '#EF4444' },
+    { sides: 20, name: 'D20', use: 'Attacks, saves, skill checks', color: '#DAA520' },
   ]
 
   return (
@@ -47,27 +47,37 @@ const LandingPage = () => {
           className="max-w-4xl mx-auto"
         >
           <div className="flex items-center justify-center mb-6">
-            <Sparkles className="h-16 w-16 text-yellow-700 mr-4" />
-            <h1 className="text-6xl font-bold fantasy-title">
+            <motion.div
+              className="floating"
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Sparkles className="h-16 w-16 text-yellow-400 mr-4 glow-text" />
+            </motion.div>
+            <h1 className="text-6xl font-bold fantasy-title glow-text">
               D&D AI Master
             </h1>
           </div>
           
-          <p className="text-xl text-yellow-900 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-yellow-200 mb-8 max-w-2xl mx-auto">
             Experience the magic of Dungeons & Dragons with our comprehensive AI-powered platform. 
             Create characters, roll dice, and embark on epic adventures guided by an intelligent Dungeon Master.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/character-creator">
-              <button className="btn-medieval text-lg px-8 py-3">
-                <Users className="mr-2 h-5 w-5 text-yellow-700" />
+              <button className="btn-3d text-lg px-8 py-3 flex items-center">
+                <Users className="mr-2 h-5 w-5" />
                 Create Character
               </button>
             </Link>
             <Link to="/game-session">
-              <button className="btn-medieval text-lg px-8 py-3 bg-[#8b2f2f] border-[#8b2f2f] hover:bg-[#a94444] ml-0 sm:ml-2">
-                <Sword className="mr-2 h-5 w-5 text-yellow-700" />
+              <button className="btn-3d text-lg px-8 py-3 flex items-center" style={{
+                background: 'linear-gradient(145deg, #8B2F2F 0%, #A94444 50%, #8B2F2F 100%)',
+                borderColor: '#8B2F2F',
+                color: '#FFE4B5'
+              }}>
+                <Sword className="mr-2 h-5 w-5" />
                 Start Adventure
               </button>
             </Link>
@@ -84,32 +94,33 @@ const LandingPage = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-yellow-900 mb-4" style={{ fontFamily: 'Cinzel, serif' }}>
+            <h2 className="text-4xl font-bold text-yellow-300 mb-4 glow-text" style={{ fontFamily: 'Cinzel, serif' }}>
               Everything You Need for D&D
             </h2>
-            <p className="text-yellow-900 text-lg max-w-2xl mx-auto">
+            <p className="text-yellow-200 text-lg max-w-2xl mx-auto">
               Our platform combines traditional D&D mechanics with modern AI technology to create 
               the ultimate tabletop RPG experience.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 perspective-container">
             {features.map((feature, index) => {
               const Icon = feature.icon
               return (
                 <motion.div
                   key={feature.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 20, rotateX: -15 }}
+                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
+                  whileHover={{ rotateY: 5 }}
                 >
                   <Link to={feature.link}>
-                    <div className="card-medieval hover:scale-105 transition-all duration-300 h-full cursor-pointer p-6">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <Icon className="h-8 w-8 text-yellow-700" />
-                        <span className="text-xl font-bold text-yellow-900" style={{ fontFamily: 'Cinzel, serif' }}>{feature.title}</span>
+                    <div className="card-3d h-full cursor-pointer p-6">
+                      <div className="flex items-center space-x-3 mb-4">
+                        <Icon className="h-8 w-8 text-yellow-400 glow-text" />
+                        <span className="text-xl font-bold text-yellow-300 glow-text" style={{ fontFamily: 'Cinzel, serif' }}>{feature.title}</span>
                       </div>
-                      <div className="text-yellow-900 text-base mb-2">
+                      <div className="text-yellow-200 text-base">
                         {feature.description}
                       </div>
                     </div>
@@ -122,19 +133,24 @@ const LandingPage = () => {
       </section>
 
       {/* Dice Overview Section */}
-      <section className="py-20 px-4 bg-black/30">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-20 px-4">
+        <div className="glassmorphism rounded-3xl p-8 max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <Book className="h-12 w-12 text-yellow-700 mx-auto mb-4" />
-            <h2 className="text-4xl font-bold text-yellow-900 mb-4" style={{ fontFamily: 'Cinzel, serif' }}>
+            <motion.div
+              className="floating"
+              whileHover={{ scale: 1.1 }}
+            >
+              <Book className="h-12 w-12 text-yellow-400 mx-auto mb-4 glow-text" />
+            </motion.div>
+            <h2 className="text-4xl font-bold text-yellow-300 mb-4 glow-text" style={{ fontFamily: 'Cinzel, serif' }}>
               Master the Dice
             </h2>
-            <p className="text-yellow-900 text-lg max-w-2xl mx-auto">
+            <p className="text-yellow-200 text-lg max-w-2xl mx-auto">
               Understand each die's role in your D&D adventures. From skill checks to damage rolls, 
               every die has its purpose.
             </p>
@@ -144,24 +160,30 @@ const LandingPage = () => {
             {diceTypes.map((die, index) => (
               <motion.div
                 key={die.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.8, rotateY: -30 }}
+                whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="bg-gradient-to-b from-yellow-100 to-yellow-200 rounded-xl p-6 mb-4 hover:scale-110 transition-transform duration-300 border-2 border-yellow-700">
-                  <div className="text-3xl font-bold text-yellow-900 mb-2">{die.name}</div>
-                  <div className="text-sm text-yellow-800">{die.sides} sides</div>
+                <div 
+                  className="dice-3d p-6 mb-4 cursor-pointer floating"
+                  style={{
+                    '--dice-color': die.color,
+                    '--dice-color-dark': die.color + 'CC'
+                  } as React.CSSProperties}
+                >
+                  <div className="text-3xl font-bold text-white mb-2 glow-text">{die.name}</div>
+                  <div className="text-sm text-white/80">{die.sides} sides</div>
                 </div>
-                <p className="text-xs text-yellow-900">{die.use}</p>
+                <p className="text-xs text-yellow-200">{die.use}</p>
               </motion.div>
             ))}
           </div>
 
           <div className="text-center mt-12">
             <Link to="/dice-roller">
-              <button className="btn-medieval px-12 py-4 text-lg">
-                <Dice6 className="mr-2 h-5 w-5 text-yellow-700" />
+              <button className="btn-3d px-12 py-4 text-lg flex items-center mx-auto">
+                <Dice6 className="mr-2 h-5 w-5" />
                 Try the Dice Roller
               </button>
             </Link>
@@ -177,16 +199,21 @@ const LandingPage = () => {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto text-center"
         >
-          <Shield className="h-16 w-16 text-yellow-700 mx-auto mb-6" />
-          <h2 className="text-4xl font-bold text-yellow-900 mb-6" style={{ fontFamily: 'Cinzel, serif' }}>
+          <motion.div
+            className="floating"
+            whileHover={{ scale: 1.1 }}
+          >
+            <Shield className="h-16 w-16 text-yellow-400 mx-auto mb-6 glow-text" />
+          </motion.div>
+          <h2 className="text-4xl font-bold text-yellow-300 mb-6 glow-text" style={{ fontFamily: 'Cinzel, serif' }}>
             Ready to Begin Your Quest?
           </h2>
-          <p className="text-xl text-yellow-900 mb-8">
+          <p className="text-xl text-yellow-200 mb-8">
             Join thousands of adventurers who have discovered the future of tabletop gaming. 
             Create your character and let the AI guide your destiny.
           </p>
           <Link to="/character-creator">
-            <button className="btn-medieval px-12 py-4 text-lg">
+            <button className="btn-3d px-12 py-4 text-lg">
               Start Your Adventure
             </button>
           </Link>
