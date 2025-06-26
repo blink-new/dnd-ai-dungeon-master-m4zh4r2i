@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  :root {
+    --background: 42 33% 92%; /* parchment */
+    --foreground: 30 20% 20%; /* dark brown */
+    --card: 42 33% 97%; /* lighter parchment */
+    --card-foreground: 30 20% 20%;
+    --popover: 42 33% 97%;
+    --popover-foreground: 30 20% 20%;
+    --primary: 36 80% 50%; /* gold */
+    --primary-foreground: 30 20% 20%;
+    --secondary: 356 53% 38%; /* burgundy */
+    --secondary-foreground: 42 33% 97%;
+    --muted: 120 21% 30%; /* forest green muted */
+    --muted-foreground: 42 33% 92%;
+    --accent: 120 21% 30%; /* forest green */
+    --accent-foreground: 42 33% 97%;
+    --destructive: 0 84% 40%;
+    --destructive-foreground: 42 33% 97%;
+    --border: 36 30% 60%; /* gold-brown border */
+    --input: 42 33% 97%;
+    --ring: 36 80% 50%;
+    --radius: 0.5rem;
+    --sidebar-background: 42 33% 92%;
+    --sidebar-foreground: 30 20% 20%;
+    --sidebar-primary: 36 80% 50%;
+    --sidebar-primary-foreground: 42 33% 97%;
+    --sidebar-accent: 120 21% 30%;
+    --sidebar-accent-foreground: 42 33% 97%;
+    --sidebar-border: 36 30% 60%;
+    --sidebar-ring: 36 80% 50%;
+  }
+  .dark {
+    --background: 30 20% 15%; /* dark wood */
+    --foreground: 42 33% 92%;
+    --card: 30 20% 20%;
+    --card-foreground: 42 33% 92%;
+    --popover: 30 20% 20%;
+    --popover-foreground: 42 33% 92%;
+    --primary: 36 80% 50%;
+    --primary-foreground: 30 20% 20%;
+    --secondary: 356 53% 38%;
+    --secondary-foreground: 42 33% 97%;
+    --muted: 120 21% 30%;
+    --muted-foreground: 42 33% 92%;
+    --accent: 120 21% 30%;
+    --accent-foreground: 42 33% 97%;
+    --destructive: 0 84% 40%;
+    --destructive-foreground: 42 33% 97%;
+    --border: 36 30% 40%;
+    --input: 30 20% 20%;
+    --ring: 36 80% 50%;
+    --sidebar-background: 30 20% 15%;
+    --sidebar-foreground: 42 33% 92%;
+    --sidebar-primary: 36 80% 50%;
+    --sidebar-primary-foreground: 42 33% 97%;
+    --sidebar-accent: 120 21% 30%;
+    --sidebar-accent-foreground: 42 33% 97%;
+    --sidebar-border: 36 30% 40%;
+    --sidebar-ring: 36 80% 50%;
+  }
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    background-image: url('https://www.transparenttextures.com/patterns/old-mathematics.png');
+    background-size: 400px 400px;
+  }
+  h1, h2, h3 {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.02em;
+    color: hsl(var(--primary));
+    text-shadow: 0 2px 8px rgba(36, 24, 6, 0.08);
+  }
+  .fantasy-title {
+    font-family: 'Cinzel Decorative', serif;
+    color: hsl(var(--secondary));
+    text-shadow: 0 2px 8px rgba(36, 24, 6, 0.12);
+  }
+  .card-medieval {
+    background: linear-gradient(135deg, hsl(var(--card)) 90%, #e9d8a6 100%);
+    border: 2px solid hsl(var(--border));
+    box-shadow: 0 4px 24px 0 rgba(36, 24, 6, 0.08);
+    border-radius: 0.75rem;
+  }
+  .btn-medieval {
+    background: linear-gradient(90deg, #bfa76a 0%, #a67c52 100%);
+    color: #fffbe6;
+    border: 2px solid #bfa76a;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.04em;
+    box-shadow: 0 2px 8px 0 rgba(36, 24, 6, 0.10);
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-medieval:hover {
+    background: linear-gradient(90deg, #a67c52 0%, #bfa76a 100%);
+    color: #fffbe6;
+    border-color: #a67c52;
+  }
+}
