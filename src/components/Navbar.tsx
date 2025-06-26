@@ -1,6 +1,6 @@
-import { Link, useLocation } from 'react-router_dom'
-import { motion } from 'framer_motion'
-import { Dice6, Users, Sword, Home } from 'lucide_react'
+import { Link, useLocation } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { Dice6, Users, Sword, Home } from 'lucide-react'
 
 const Navbar = () => {
   const location = useLocation()
@@ -13,7 +13,7 @@ const Navbar = () => {
   ]
 
   return (
-    <nav className="glassmorphism border-b border-yellow_600/30 shadow-2xl backdrop-blur-md sticky top-0 z-50" style={{ fontFamily: 'Cinzel, serif' }}>
+    <nav className="glassmorphism border-b border-yellow-600/30 shadow-2xl backdrop-blur-md sticky top-0 z-50" style={{ fontFamily: 'Cinzel, serif' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
