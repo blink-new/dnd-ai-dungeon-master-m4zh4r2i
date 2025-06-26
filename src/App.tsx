@@ -1,11 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import { ThemeProvider } from 'next-themes'
 import { Toaster } from 'sonner'
 import Navbar from './components/Navbar'
-import LandingPage from './pages/LandingPage'
-import CharacterCreator from './pages/CharacterCreator'
-import DiceRoller from './pages/DiceRoller'
-import GameSession from './pages/GameSession'
+import GameBoard from './GameBoard'
 import './App.css'
 
 function App() {
@@ -17,12 +14,7 @@ function App() {
           <div className="perspective-container">
             <Navbar />
             <main className="scene-3d">
-              <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/character-creator" element={<CharacterCreator />} />
-                <Route path="/dice-roller" element={<DiceRoller />} />
-                <Route path="/game-session" element={<GameSession />} />
-              </Routes>
+              <GameBoard />
             </main>
           </div>
           <Toaster />
